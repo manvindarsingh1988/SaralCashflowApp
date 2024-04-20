@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import Roles from "./Roles";
 
 function Master() {
@@ -6,7 +7,10 @@ function Master() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    
+    axios
+      .get("https://manvindarsingh.bsite.net/api/roles")
+      .then((result) => setRoles(result))
+      .catch((err) => console.error(err));
   }, []);
 
   return (
