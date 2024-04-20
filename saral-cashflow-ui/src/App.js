@@ -27,17 +27,21 @@ function App() {
               <NavLink to="/" className="nav-link" activeclassname="active">
                 Home
               </NavLink>
-              <NavLink to="/Master" className="nav-link" activeclassname="active">
+              <NavLink
+                to="/Master"
+                className="nav-link"
+                activeclassname="active"
+              >
                 Master
               </NavLink>
             </div>
           </div>
         </div>
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/Master" element={<Master />}></Route>
-        </Routes>
       </nav>
+      <Routes>
+        <Route exact path="/" element={<Home />}></Route>
+        <Route exact path="/Master" element={<Master />}></Route>
+      </Routes>
     </BrowserRouter>
   );
 }
