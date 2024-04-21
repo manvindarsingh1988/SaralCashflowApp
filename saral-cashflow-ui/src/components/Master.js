@@ -1,17 +1,8 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import Roles from "./Roles";
 
 function Master() {
   const [activeLink, setActiveLink] = useState("Roles");
-  const [roles, setRoles] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://manvindarsingh.bsite.net/api/roles")
-      .then((result) => setRoles(result))
-      .catch((err) => console.error(err));
-  }, []);
 
   return (
     <div className="container mt-2">
@@ -24,7 +15,6 @@ function Master() {
           >
             Roles
           </button>
-          <Roles data={roles} />
         </li>
         <li className="nav-item">
           <button
@@ -47,6 +37,7 @@ function Master() {
           </button>
         </li>
       </ul>
+      {activeLink === "Roles" ? <Roles /> : ""}
     </div>
   );
 }
