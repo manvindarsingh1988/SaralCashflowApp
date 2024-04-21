@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import axios, { HttpStatusCode } from "axios";
-import { ALERTS, ROLES_API } from "../constants/constants";
+import { ALERTS, STATUSES_API } from "../constants/constants";
 import AppContext from "./contexts/AppContext";
 
-function Roles() {
-  const [roles, setRoles] = useState([]);
+function Statuses() {
+  const [statuses, setStatuses] = useState([]);
   const { showFadingAlert } = useContext(AppContext);
 
   useEffect(() => {
@@ -13,8 +13,8 @@ function Roles() {
 
   function get() {
     axios
-      .get(ROLES_API)
-      .then((result) => setRoles(result?.data || []))
+      .get(STATUSES_API)
+      .then((result) => setStatuses(result?.data || []))
       .catch((err) => {
         console.error(err);
         showFadingAlert("Oops! something went wrong.", ALERTS.warning);
@@ -22,18 +22,18 @@ function Roles() {
   }
 
   function add() {
-    const newRoleInput = document.getElementById("input-add-role");
-    const newRole = newRoleInput.value;
-    if (newRole) {
+    const newStatusInput = document.getElementById("input-add-status");
+    const newStatus = newStatusInput.value;
+    if (newStatus) {
       axios
-        .post(ROLES_API, {
-          name: newRole,
+        .post(STATUSES_API, {
+          statusType: newStatus,
         })
         .then(function (response) {
           if (response.status === HttpStatusCode.Ok) {
-            newRoleInput.value = "";
+            newStatusInput.value = "";
             get();
-            showFadingAlert("Role added successfully.", ALERTS.success);
+            showFadingAlert("status added successfully.", ALERTS.success);
           }
         })
         .catch(function (error) {
@@ -44,11 +44,11 @@ function Roles() {
 
   function remove(id) {
     axios
-      .delete(`${ROLES_API}/${id}`)
+      .delete(`${STATUSES_API}/${id}`)
       .then(function (response) {
         if (response.status === HttpStatusCode.NoContent) {
           get();
-          showFadingAlert("Role deleted successfully.", ALERTS.success);
+          showFadingAlert("Status deleted successfully.", ALERTS.success);
         }
       })
       .catch(function (error) {
@@ -61,11 +61,11 @@ function Roles() {
     <div className="container border border-1 border-top-0">
       <div className="pt-3 input-group pb-3">
         <input
-          id="input-add-role"
+          id="input-add-status"
           type="text"
           className="form-control"
-          placeholder="Add New Role"
-          aria-label="Add New Role"
+          placeholder="Add New Status"
+          aria-label="Add New Status"
           aria-describedby="button-addon2"
         />
         <button
@@ -81,12 +81,12 @@ function Roles() {
         <thead>
           <tr>
             <th scope="col">Id</th>
-            <th scope="col">Role</th>
+            <th scope="col">Status</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {roles.map((d) => (
+          {statuses.map((d) => (
             <tr key={d.id}>
               <td>{d.id}</td>
               <td>{d.name}</td>
@@ -107,4 +107,4 @@ function Roles() {
   );
 }
 
-export default Roles;
+export default Statuses;
