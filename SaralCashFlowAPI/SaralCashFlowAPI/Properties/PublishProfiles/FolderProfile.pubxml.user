@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\personal\workspace\SaralCashflowApp\SaralCashFlowAPI\SaralCashFlowAPI\bin\Release\net8.0\publish\</_PublishTargetUrl>
-    <History>True|2024-04-20T08:56:44.3401343Z;True|2024-04-20T13:46:09.1316629+05:30;</History>
+    <History>True|2024-04-21T01:08:01.9092199Z;True|2024-04-20T14:26:44.3401343+05:30;True|2024-04-20T13:46:09.1316629+05:30;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

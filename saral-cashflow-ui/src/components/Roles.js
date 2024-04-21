@@ -29,7 +29,7 @@ function Roles() {
     if (newRole) {
       axios
         .post(ROLES_API, {
-          role: newRole,
+          name: newRole,
         })
         .then(function (response) {
           if (response.status === HttpStatusCode.Ok) {
