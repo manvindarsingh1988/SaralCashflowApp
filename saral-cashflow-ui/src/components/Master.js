@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Roles from "./Roles";
+import Statuses from "./Statuses";
 
 function Master() {
   const [activeLink, setActiveLink] = useState("Roles");
@@ -37,7 +38,7 @@ function Master() {
           </button>
         </li>
       </ul>
-      {activeLink === "Roles" ? <Roles /> : ""}
+      {activeLink === "Roles" ? <Roles /> : <Statuses />}
     </div>
   );
 }
