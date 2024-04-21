@@ -1,40 +1,73 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import { BASE_URL } from "../constants/constants";
 
+const ROLES_API = `${BASE_URL}/roles`;
+
 function Roles() {
-    const [roles, setRoles] = useState([]);
+  const [roles, setRoles] = useState([]);
 
-    useEffect(() => {
-      axios
-        .get(`${BASE_URL}/roles`)
-        .then((result) => setRoles(result?.data || []))
-        .catch((err) => console.error(err));
-    }, []);
+  useEffect(() => {
+    get();
+  }, []);
 
-  function addRole() {
-    const newRole = document.getElementById("input-add-role");
+  function get() {
+    axios
+      .get(ROLES_API)
+      .then((result) => setRoles(result?.data || []))
+      .catch((err) => console.error(err));
+  }
+
+  function add() {
+    const newRoleInput = document.getElementById("input-add-role");
+    const newRole = newRoleInput.value;
 
     if (newRole) {
-        
+      axios
+        .post(ROLES_API, {
+          role: newRole,
+        })
+        .then(function (response) {
+          if (response.status === HttpStatusCode.Ok) {
+            newRoleInput.value = "";
+            get();
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
     }
+  }
+
+  function remove(id) {
+    axios
+      .delete(`${ROLES_API}/${id}`)
+      .then(function (response) {
+        if (response.status === HttpStatusCode.NoContent) {
+          get();
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
 
   return (
     <div className="container border border-1 ">
-      <div class="mt-3 input-group mb-3">
+      <div className="mt-3 input-group mb-3">
         <input
           id="input-add-role"
           type="text"
-          class="form-control"
+          className="form-control"
           placeholder="Add New Role"
           aria-label="Add New Role"
           aria-describedby="button-addon2"
         />
         <button
-          class="btn btn-outline-secondary"
+          className="btn btn-primary"
           type="button"
           id="button-addon2"
+          onClick={add}
         >
           Add
         </button>
@@ -49,13 +82,17 @@ function Roles() {
         </thead>
         <tbody>
           {roles.map((d) => (
-            <tr>
+            <tr key={d.id}>
               <td>{d.id}</td>
               <td>{d.name}</td>
               <td>
                 <div className="row">
                   <div className="col">
-                    <button type="button" className="btn btn-danger">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => remove(d.id)}
+                    >
                       Delete
                     </button>
                   </div>
