@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios, { HttpStatusCode } from "axios";
-import { BASE_URL } from "../constants/constants";
+import { ALERTS, BASE_URL } from "../constants/constants";
+import AppContext from "./contexts/AppContext";
 
 const ROLES_API = `${BASE_URL}/roles`;
 
 function Roles() {
   const [roles, setRoles] = useState([]);
+  const { showFadingAlert } = useContext(AppContext);
 
   useEffect(() => {
     get();
@@ -15,13 +17,15 @@ function Roles() {
     axios
       .get(ROLES_API)
       .then((result) => setRoles(result?.data || []))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        showFadingAlert("Oops! something went wrong.", ALERTS.warning);
+      });
   }
 
   function add() {
     const newRoleInput = document.getElementById("input-add-role");
     const newRole = newRoleInput.value;
-
     if (newRole) {
       axios
         .post(ROLES_API, {
@@ -31,10 +35,11 @@ function Roles() {
           if (response.status === HttpStatusCode.Ok) {
             newRoleInput.value = "";
             get();
+            showFadingAlert("Role added successfully.", ALERTS.success);
           }
         })
         .catch(function (error) {
-          console.error(error);
+          showFadingAlert("Oops! something went wrong.", ALERTS.warning);
         });
     }
   }
@@ -45,10 +50,12 @@ function Roles() {
       .then(function (response) {
         if (response.status === HttpStatusCode.NoContent) {
           get();
+          showFadingAlert("Role deleted successfully.", ALERTS.success);
         }
       })
       .catch(function (error) {
         console.error(error);
+        showFadingAlert("Oops! something went wrong.", ALERTS.warning);
       });
   }
 
