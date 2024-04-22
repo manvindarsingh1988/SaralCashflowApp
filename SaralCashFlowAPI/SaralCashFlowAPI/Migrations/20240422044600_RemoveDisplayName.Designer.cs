@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SaralCashFlowAPI.Models;
 
@@ -11,9 +12,11 @@ using SaralCashFlowAPI.Models;
 namespace SaralCashFlowAPI.Migrations
 {
     [DbContext(typeof(SaralCashFlowDBContext))]
-    partial class SaralCashFlowDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240422044600_RemoveDisplayName")]
+    partial class RemoveDisplayName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

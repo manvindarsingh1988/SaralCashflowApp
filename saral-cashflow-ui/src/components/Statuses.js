@@ -27,7 +27,7 @@ function Statuses() {
     if (newStatus) {
       axios
         .post(STATUSES_API, {
-          statusType: newStatus,
+          name: newStatus,
         })
         .then(function (response) {
           if (response.status === HttpStatusCode.Ok) {
